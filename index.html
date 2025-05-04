@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Twitter Video Downloader</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Twitter Video Downloader</h1>
+  <input type="text" id="urlInput" placeholder="Cole o link do tweet aqui" size="50" />
+  <button onclick="baixarVideo()">Obter vídeo</button>
+
+  <p class="disclaimer">Não armazenamos nenhum conteúdo. Os vídeos são processados diretamente pela API de terceiros.</p>
+
+  <div id="videoContainer" style="display: none;">
+    <video id="videoPlayer" controls></video>
+    <br>
+    <a id="downloadLink" download="twitterVideo" target="_blank">
+      <button>Baixar vídeo</button>
+    </a>
+    <p class="note"> Se o download não começar automaticamente, clique com o botão direito no vídeo acima e selecione "Salvar vídeo como...".</p>
+  </div>
+
+  <footer>
+    <a href="politica-de-privacidade.html" target="_blank" style="color: #5a5454;"> <strong>Política de privacidade</strong></a>
+  </footer>
+
+  <script>
+    async function baixarVideo() {
+      const url = document.getElementById("urlInput").value;
+      const videoContainer = document.getElementById("videoContainer");
+      const videoPlayer = document.getElementById("videoPlayer");
+      const downloadLink = document.getElementById("downloadLink");
+
+      try {
+        const response = await fetch("http://localhost:3000/download", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ url })
+        });
+
+        const data = await response.json();
+
+        if (!data.videoUrl) {
+          throw new Error("URL inválida ou vídeo indisponível.");
+        }
+
+        videoPlayer.src = data.videoUrl;
+        downloadLink.href = data.videoUrl;
+        videoContainer.style.display = "block";
+      } catch (error) {
+        alert("Erro ao obter o vídeo.");
+        console.error(error);
+      }
+    }
+  </script>
+</body>
+</html>
