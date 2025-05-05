@@ -14,7 +14,7 @@ app.post("/download", (req, res) => {
     return res.status(400).json({ error: "URL inválida do Twitter" });
   }
 
-  const command = `yt-dlp -f best -g "${tweetUrl}"`;
+  const command = `./yt-dlp -f best -g "${tweetUrl}"`;
 
   exec(command, (err, stdout, stderr) => {
     if (err) {
