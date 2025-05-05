@@ -34,7 +34,7 @@
       const downloadLink = document.getElementById("downloadLink");
 
       try {
-        const response = await fetch("https://twittervideodownloader.onrender.com", {
+        const response = await fetch("https://twittervideodownloader.onrender.com/download", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ url })
