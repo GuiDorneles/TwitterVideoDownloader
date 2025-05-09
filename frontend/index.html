@@ -9,7 +9,7 @@
 <body>
   <h1>Twitter Video Downloader</h1>
   <input type="text" id="urlInput" placeholder="Cole o link do tweet aqui" size="50"/>
-  <button onclick="baixarVideo()">Obter vídeo</button>
+  <button id="obterVideo" onclick="baixarVideo(), disable()">Obter vídeo</button>
 
   <p class="disclaimer">Não armazenamos nenhum conteúdo. Os vídeos são processados diretamente pela API de terceiros.</p>
 
@@ -53,6 +53,21 @@
         alert("Erro ao obter o vídeo.");
         console.error(error);
       }
+    }
+
+    function disable() {
+      x = getElementById("obterVideo");
+      x.disabled = true;
+
+      x.innerHTML = "Carregando..."
+      setTimeout(enable, 10000);
+    }
+
+    function enable() {
+      x = getElementById("obterVideo");
+      x.disabled = false;
+
+      x.innerHTML = "Obter vídeo";
     }
   </script>
 </body>
